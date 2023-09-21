@@ -19,23 +19,21 @@ public class ParkingGarage {
     }
 
     public Ticket parkVehicle(Vehicle vehicle) {
-        if (vehicle.getVehicleType() == VehicleType.CAR
-                && parkingSpots.stream()
-                .filter(ParkingSpot::isEmpty)
-                .map(ParkingSpot::getParkingSpotType)
-                .toList()
-                .contains(ParkingSpotType.SMALL)) {
-            return createTicketAndOccupySpot(ParkingSpotType.SMALL, vehicle);
-        } else return createTicketAndOccupySpot(ParkingSpotType.LARGE, vehicle);
-    }
-
-    private Ticket createTicketAndOccupySpot(ParkingSpotType spotType, Vehicle vehicle) {
-        return parkingSpots.stream()
-                .filter(parkingSpot -> parkingSpot.isEmpty() && parkingSpot.getParkingSpotType() == spotType)
-                .findFirst()
-                .map(parkingSpot -> {
-                    parkingSpot.setOccupied();
-                    return new Ticket(parkingSpot, vehicle);
-                }).orElse(null);
+        for (ParkingSpotType spotType : vehicle.getVehicleType().getParkingSpotTypeList()) {
+            ParkingSpot spot = parkingSpots.stream()
+                    .filter(parkingSpot -> parkingSpot.isEmpty()
+                            && parkingSpot.getParkingSpotType().equals(spotType))
+                    .findFirst()
+                    .orElse(null);
+            if (spot != null) {
+                spot.setOccupied();
+                Ticket ticket = new Ticket(spot, vehicle);
+                tickets.add(ticket);
+                System.out.println(ticket);
+                return ticket;
+            }
+        }
+        System.out.println("No parking spots available for: " + vehicle);
+        return null;
     }
 }

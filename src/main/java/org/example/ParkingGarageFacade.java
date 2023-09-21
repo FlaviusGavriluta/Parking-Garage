@@ -27,10 +27,11 @@ public class ParkingGarageFacade {
         List<Vehicle> vehicles = Arrays.asList(
                 new Vehicle(VehicleType.CAR),
                 new Vehicle(VehicleType.CAR),
+                new Vehicle(VehicleType.TRUCK),
                 new Vehicle(VehicleType.CAR),
                 new Vehicle(VehicleType.CAR),
                 new Vehicle(VehicleType.TRUCK)
         );
-        vehicles.forEach(vehicle -> System.out.println(parkingGarage.parkVehicle(vehicle)));
+        vehicles.forEach(vehicle -> parkingGarage.parkVehicle(vehicle));
     }
 }

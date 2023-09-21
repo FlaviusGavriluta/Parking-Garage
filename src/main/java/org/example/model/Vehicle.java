@@ -24,12 +24,6 @@ public class Vehicle {
         this.vehicleType = vehicleType;
     }
 
-    public void canPark() {
-        if (vehicleType.equals(VehicleType.CAR))
-            canPark();
-
-    }
-
     @Override
     public String toString() {
         return "Vehicle{" +
